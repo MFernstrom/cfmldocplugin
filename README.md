@@ -33,4 +33,6 @@ public array function myAwesomeFunction( required string awesome, maybeAwesome =
 ```
 Working out a few kinks, then version 0.1 will be available.
 
+The output comment blocks are pretty standard, I've tested with YUIDoc but not JavaDoc for generating documentation from it.
+
 Be nice, this is the first Python code I've ever written, outside of "Hello World"  ;)
