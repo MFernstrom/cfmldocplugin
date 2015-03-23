@@ -23,7 +23,7 @@ becomes:
   * @public
   * @param {string} awesome (required) 
   * @param {any} [maybeAwesome = "totally" ]  
-  * @return {myAwesome}
+  * @return {array}
   */
 
 public array function myAwesomeFunction( required string awesome, maybeAwesome = "totally" ) hint="My text here" {
