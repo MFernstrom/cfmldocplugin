@@ -36,7 +36,9 @@ The output comment blocks are pretty standard, I've tested with YUIDoc but not J
 This is the first release, if you find bugs please let me know so I can take a look at it.
 
 ## Installing
-My plan is to get this added to the Sublime package manager, in the mean time (Or if you just like doing things manually), download the DocifyCfml folder, and drop it into your Sublime package folder.
+You can install the plugin through the Sublime package manager by searching for CFMLDocPlugin
+
+If you have issues installing through the package manager, or just like doing things manually, download the DocifyCfml folder, and drop it into your Sublime package folder.
 
 Set up a key shortcut to the command docifycfml, like so:
 
@@ -45,5 +47,3 @@ Set up a key shortcut to the command docifycfml, like so:
 ```
 
 And that's pretty much it.
-
-Be nice, this is the first Python code I've ever written, outside of "Hello World"  ;)
