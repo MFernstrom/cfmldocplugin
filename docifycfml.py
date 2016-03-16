@@ -1,18 +1,17 @@
 ##
-#	About		: Auto javaDocify CFML tags and cfscript
+#	About			: Auto javaDocify CFML tags and cfscript
 #
 #	Author		: Marcus Fernstrom
 #
-#	Website		: http://www.MarcusFernstrom.com
-#
-#	Other		: Go easy on me, it's my first Python script  ;)
+#	Website		: http://www.MarcusFernstrom.com/
 #
 #	Copyright	: Marcus Fernstrom, 2014
 #
-#	Version 	: 0.1
+#	Version 	: 0.1.1
 #
 #	License		: GPL3
 #
+# Release		: Fixed a bug that caused the plugin to not run on Sublime 3
 ##
 
 import sublime, sublime_plugin, re
