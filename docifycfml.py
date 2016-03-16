@@ -1,17 +1,19 @@
 ##
-#	About			: Auto javaDocify CFML tags and cfscript
+#	About				: Automatically generates and inserts CFDoc comment blocks for functions in cftags and cfscript.
 #
-#	Author		: Marcus Fernstrom
+#	Author			: Marcus Fernstrom
 #
-#	Website		: http://www.MarcusFernstrom.com/
+#	Website			: http://www.MarcusFernstrom.com
 #
-#	Copyright	: Marcus Fernstrom, 2014
+#	Contributor	: Iain Eudailey | www.iaineudailey.com
 #
-#	Version 	: 0.1.1
+#	Copyright		: Marcus Fernstrom, 2014
 #
-#	License		: GPL3
+#	Version 		: 0.1.1
 #
-# Release		: Fixed a bug that caused the plugin to not run on Sublime 3
+#	Last Update : March, 2016
+#
+#	License			: GPL3
 ##
 
 import sublime, sublime_plugin, re
@@ -36,16 +38,16 @@ class docifycfmlCommand(sublime_plugin.TextCommand):
 		print("Auto javaDocify Plugin for CFML")
 		print("===============================")
 
-		print("Performing black magic..")
+		print("Running..")
 		self.DocTags(edit)
 		self.docScript(edit)
-		print("Assuming you did not lose all your stuff or turn into a toad, it worked!")
+		print("Done!")
 	
 	##
-	#	Below are the javaDoc functions for handling CFML tags
+	#	Below are the CFDoc functions for handling CFML tags
 	##
 	def DocTags(self, edit):
-		print("Checking if we need to doc cftags")
+		print("Adding comments to cftags")
 		content = self.view.substr(sublime.Region(0, self.view.size()))
 		allcontent = sublime.Region(0, self.view.size())
 
@@ -163,7 +165,7 @@ class docifycfmlCommand(sublime_plugin.TextCommand):
 	#	Below are the functions for handling cfscript
 	##
 	def docScript(self, edit):
-		print("Checking if we need to doc cfscript")
+		print("Adding comments to cfscript")
 		
 		# Grabbing all the content of the window
 		content = self.view.substr(sublime.Region(0, self.view.size()))
@@ -248,11 +250,14 @@ class docifycfmlCommand(sublime_plugin.TextCommand):
 									functionName = k.group(1)
 
 								# Grabs the returntype of the function
-								k = re.findall(re.compile('.*?(?:public|private|remote|package)\s?|(\w*)\s?function', re.IGNORECASE), currentCodeBlock)
+								k = re.findall(re.compile('.*?(public|private|remote|package)\s?|(\w*)\s?function', re.IGNORECASE | re.DOTALL), currentCodeBlock)
 								if k:
-									print k
-									if k[1]:
-										functionReturnType = k[1]
+									if re.findall(re.compile('.*?(public|private|remote|package)\s?', re.IGNORECASE | re.DOTALL), k[0][0]):
+										if k[1][1] != '':
+											functionReturnType = k[1][1]
+									else:
+										if k[0][1] != '':
+											functionReturnType = k[0][1]
 
 								# Grabs the functions returnformat, if it's defined
 								tagReturnFormat = re.match(re.compile('.*function.*returnformat\s?=\s?"(\w*)"', re.IGNORECASE | re.DOTALL), currentCodeBlock)
