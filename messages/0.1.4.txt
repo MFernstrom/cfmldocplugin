@@ -1,0 +1,7 @@
+CFMLDocPlugin has been updated, I hope it will help you document your code much faster than before.
+
+If you would like to get in touch, feel free to contact me at Marcus@MarcusFernstrom.com
+
+To use the plugin, set up a keyboard shortcut for docifycfml in your preferences/key bindings/user
+
+{ "keys": ["ctrl+shift+2"], "command": "docifycfml" }

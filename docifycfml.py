@@ -9,9 +9,9 @@
 #
 #	Copyright		: Marcus Fernstrom, 2014
 #
-#	Version 		: 0.1.1
+#	Version 		: 0.1.4
 #
-#	Last Update : March, 2016
+#	Last Update : April, 2016
 #
 #	License			: GPL3
 ##
@@ -82,18 +82,18 @@ class docifycfmlCommand(sublime_plugin.TextCommand):
 
 				# Grabs the hint/description
 				if r.match(re.compile('<cffunction.*(?:hint|description)\s?=\s?"([\w\s]*)".*>', re.IGNORECASE)):
-					block = block + "\n%s  * %s\n%s  *" % (whitespace, r.group(1), whitespace)
-
+					block = block + "\n%s\t* %s\n%s  *" % (whitespace, r.group(1), whitespace)
+					
 				# Grabs the returntype
 				if r.match(re.compile('<cffunction.*(?:returntype)\s?=\s?"([\w\s]*)".*>', re.IGNORECASE)):
 					returnTypeText = "{" + r.group(1) + "}"
-
+					
 				if r.match(re.compile('<cffunction.*access\s?=\s?"(\w*)".*>', re.IGNORECASE)):
-					block = block + "\n%s  * @%s" % (whitespace, r.group(1))
+					block = block + "\n%s\t* @%s" % (whitespace, r.group(1))
 				else:
-					block = block + "\n%s  * @public" % whitespace
+					block = block + "\n%s\t* @public" % whitespace
 				
-				block = block + "\n%s  * @method %s" % (whitespace, m.group(1))
+				block = block + "\n%s\t* @method %s" % (whitespace, m.group(1))
 
 				# Checks to see if the function has a defined returnformat
 				returnFormatCheck = re.match(re.compile('.*returnformat\s?=\s?"(\w*)"', re.IGNORECASE), toChange)
@@ -143,20 +143,21 @@ class docifycfmlCommand(sublime_plugin.TextCommand):
 
 				# If there are default values, we display a different string than if there aren't.
 				if len(defaultText) > 0:
-					block = block + "\n%s  * @param %s%s[%s = %s]%s%s" % (whitespace, typeCheck, argTypeText, name.group(1), defaultText.strip(), reqCheck, hintText)
+					block = block + "\n%s\t* @param %s%s[%s = %s]%s%s" % (whitespace, typeCheck, argTypeText, name.group(1), defaultText.strip(), reqCheck, hintText)
 				else:
-					block = block + "\n%s  * @param %s%s%s%s" % (whitespace, typeCheck, name.group(1), reqCheck, hintText)
+					block = block + "\n%s\t* @param %s%s%s%s" % (whitespace, typeCheck, name.group(1), reqCheck, hintText)
 
 			if returnFormatCheck:
-				block = block + "\n%s  * @returnformat {%s}" % (whitespace, returnFormatCheck.group(1))
+				block = block + "\n%s\t* @returnformat {%s}" % (whitespace, returnFormatCheck.group(1))
 
 			# Pulls all the cfreturn values, note that there may be more than one
 			returnMatch = re.findall(re.compile('<cfreturn\s?(.*)>', re.IGNORECASE), toChange)
 			
 			if len(returnMatch) > 0:
-				block = block + "\n%s  * @return %s" % (whitespace, returnTypeText)
+				block = block + "\n%s\t* @return %s" % (whitespace, returnTypeText)
 
-			block = "<!---\n" + block + "\n%s  */\n%s" % (whitespace, whitespace) + "--->\n"
+			block = "<!---\n" + block + "\n%s\t*/\n%s--->\n%s" % (whitespace, whitespace, whitespace)
+			print(block)
 			return block + toChange
 		else:
 			return changeBlock.group(1)
